@@ -1,0 +1,2 @@
+model_checkpoint_path: "sentiment_manish.ckpt"
+all_model_checkpoint_paths: "sentiment_manish.ckpt"
