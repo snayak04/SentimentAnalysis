@@ -19,13 +19,13 @@ import argparse
 import gensim
 import json
 
-#model = gensim.models.KeyedVectors.load_word2vec_format('../GoogleNews-vectors-negative300.bin', binary=True)
+model = gensim.models.KeyedVectors.load_word2vec_format('../GoogleNews-vectors-negative300.bin', binary=True)
 
-model = dict()
+#model = dict()
 
-with open('../Data/reviews2.txt', 'r') as f:
+with open('./Data/reviews.txt', 'r') as f:
     reviews = f.read()
-with open('../Data/labels2.txt', 'r') as f:
+with open('./Data/labels.txt', 'r') as f:
     labels_org = f.read()
 
 from string import punctuation
@@ -123,8 +123,8 @@ for i in range(n_words-1):
 
 
 import random
-
-idx = random.sample(range(len(train_claim)), 1000)
+'''
+idx = random.sample(range(len(train_x)), 1000)
 
 train_x_s = []
 train_y_s = []
@@ -137,7 +137,7 @@ train_x = np.array(train_x_s)
 train_y = np.array(train_y_s)
 test_x = np.array(test_x)
 test_y = np.array(test_y)
-
+'''
 
 train_x_e = np.ndarray((len(train_x), seq_len, embed_size))
 
@@ -148,7 +148,7 @@ for i in range(len(train_x)):
 val_x_e = np.ndarray((len(val_x), seq_len, embed_size))
 
 for i in range(len(val_x)):
-    for j in range(sqe_len):
+    for j in range(seq_len):
         val_x_e[i][j][:] = w2v_embed[val_x[i][j]]
 
 
@@ -163,9 +163,6 @@ use_dropout = True
 model1 = Sequential()
 #model1.add(Embedding(vocabulary, embed_size, input_length=mx_sent))
 model1.add(LSTM(embed_size, return_sequences=True, input_shape=(seq_len, embed_size)))
-#model1.add(LSTM(embed_size, return_sequences=True))
-#model1.add(LSTM(embed_size, return_sequences=True))
-#model1.add(LSTM(embed_size, return_sequences=True))
 model1.add(LSTM(embed_size, return_sequences=False))
 if use_dropout:
     model1.add(Dropout(0.5))
@@ -176,16 +173,15 @@ optimizer = Adam()
 # model1.compile(loss='mean_squared_error', optimizer='adam')
 # parallel_model = multi_gpu_model(model, gpus=2)
 parallel_model = model1
-#parallel_model.compile(loss='binary_crossentropy', optimizer='adam' , metrics=['acc'])
-parallel_model.compile(loss='mean_squared_error', optimizer='adam')
+parallel_model.compile(loss='binary_crossentropy', optimizer='adam' , metrics=['acc'])
+#parallel_model.compile(loss='mean_squared_error', optimizer='adam')
 
-#print(model.summary())
+
 print(model1.summary())
-#print(model2.summary())
-#plot_model(model,to_file='demo.png',show_shapes=True)
-num_epochs = 10
+#plot_model(model1,to_file='demo.png',show_shapes=True)
+num_epochs = 50
 
-parallel_model.fit(x=[train_sent_e, train_claim_e], y=train_y, batch_size=1000, epochs=num_epochs,
+parallel_model.fit(x= train_x_e, y=train_y, batch_size=1000, epochs=num_epochs,
                validation_split=0.1)
 
 print(parallel_model.evaluate([val_sent_e,val_claim_e],val_y))
