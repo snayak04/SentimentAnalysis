@@ -1,7 +1,6 @@
 #ADD YOUR RESULTS HERE
 
 
-##SIMPLELTSM
-
+##SIMPLELSTM
 
 Validation Accuracy (0-1 Classification): .87-.88 after 30 epochs
