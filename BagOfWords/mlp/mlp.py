@@ -91,7 +91,7 @@ model.add(Dense(1, activation='sigmoid'))
 
 #Compile and Fit network to training data
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-model.fit(x_train, y_train, epochs=10, verbose=2)
+model.fit(x_train, y_train, epochs=30, verbose=2)
 
 #Evaluate network on testing data
 loss, acc = model.evaluate(x_test, y_test, verbose=0)
