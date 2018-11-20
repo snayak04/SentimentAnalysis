@@ -1,0 +1,11 @@
+        binary  count  freq  tfidf
+count   1.000  1.000  1.00   1.00
+mean    0.915  0.885  0.91   0.85
+std       NaN    NaN   NaN    NaN
+min     0.915  0.885  0.91   0.85
+25%     0.915  0.885  0.91   0.85
+50%     0.915  0.885  0.91   0.85
+75%     0.915  0.885  0.91   0.85
+max     0.915  0.885  0.91   0.85
+
+Over 1 run, binary showed highest accuracy amongst the 4 word scoring methods.
