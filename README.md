@@ -12,4 +12,4 @@ Validation Accuracy: .91 after 30 epochs
 
 ##SVM
 
-Validation Accuracy: .59 after 30 epochs
+Validation Accuracy: 88%
